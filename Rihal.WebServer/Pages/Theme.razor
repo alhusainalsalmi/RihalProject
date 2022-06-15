@@ -1,0 +1,18 @@
+﻿@page "/theme"
+
+@using MudBlazor
+@using Rihal.WebServer.Configurations
+
+<MudThemeProvider @bind-IsDarkMode="@ThemeConfig.isDarkMode" />
+
+<MudSwitch @bind-Checked="@ThemeConfig.isDarkMode" Color="Color.Primary" Class="ma-4" T="bool" Label="Toggle Light/Dark Mode" @onclick="() =>SetIsDarkMode()"/>
+
+@code{
+    private MudTheme _theme = new();
+    private bool _isDarkMode =true;
+    private bool SetIsDarkMode()
+    {
+        ThemeConfig.isDarkMode = _isDarkMode;
+        return true;
+    }
+}

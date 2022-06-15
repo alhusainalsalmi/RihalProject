@@ -1,0 +1,33 @@
+﻿<div class="top-row ps-3 navbar navbar-dark">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="">Rihal.WebServer</a>
+        <button title="Navigation menu" class="navbar-toggler" @onclick="ToggleNavMenu">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+    </div>
+</div>
+
+
+<MudNavMenu>
+    <MudNavLink Href="/" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Api">Home</MudNavLink>
+    <MudNavGroup Title="Settings" Icon="@Icons.Filled.ScatterPlot"  Expanded="false">
+        <MudNavLink Href="/theme"  Match="NavLinkMatch.Prefix">
+              <MudIcon Icon="@Icons.Custom.Brands.GitHub" Color="Color.Primary" />
+              Theme
+        </MudNavLink>
+    </MudNavGroup>
+    <MudNavLink Href="/stats"  Match="NavLinkMatch.Prefix" Icon="@Icons.Custom.Uncategorized.Radioactive">
+        Statistics
+    </MudNavLink>
+</MudNavMenu>
+
+@code {
+    private bool collapseNavMenu = true;
+
+    private string? NavMenuCssClass => collapseNavMenu ? "collapse" : null;
+
+    private void ToggleNavMenu()
+    {
+        collapseNavMenu = !collapseNavMenu;
+    }
+}

@@ -1,0 +1,71 @@
+﻿@page "/stats"
+
+<PageTitle>Weather forecast</PageTitle>
+
+@using Rihal.WebServer.Dtos.OutputDtos
+@using Rihal.WebServer.Services.Interfaces
+@inject IStudentService _studentService;
+
+
+
+@if (studentsStatistics == null)
+{
+        <MudProgressCircular Color="Color.Secondary" Indeterminate="true" />
+}
+else
+{
+
+    <h2>Students Per Class</h2>
+     <MudSimpleTable Style="overflow-x: auto;">
+    <thead>
+        <tr>
+            <th>Class Name</th>
+            <th>Number of Students</th>
+        </tr>
+    </thead>
+    <tbody>
+      @foreach (var data in studentsStatistics.StudentsPerClass)
+            {
+                <tr>
+                    <td>@data.ClassName</td>
+                    <td>@data.NumberOfStudents</td>            
+                </tr>
+            }
+    </tbody>
+   </MudSimpleTable>
+
+    <br />
+
+        <h2>Students Per Counries</h2>
+    <MudSimpleTable Style="overflow-x: auto;">
+    <thead>
+        <tr>
+            <th>Country Name</th>
+                <th>Number of Students</th>
+        </tr>
+    </thead>
+    <tbody>
+       @foreach (var data in studentsStatistics.StudentsPerCountry)
+            {
+                <tr>
+                
+                    <td>@data.CountryName</td>
+                    <td>@data.NumberOfStudents</td>
+                </tr>
+            }
+    </tbody>
+</MudSimpleTable>
+     <br />
+
+    <h2>Students Average Age</h2>
+    <h4>@studentsStatistics.AverageStudentsAge Years</h4>
+
+}
+
+@code {
+    private StudentsStatisticsOutputDto? studentsStatistics;
+    protected override async Task OnInitializedAsync()
+    {
+        studentsStatistics = await _studentService.GetStudentsStatistics();  
+    }
+}

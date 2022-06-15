@@ -1,0 +1,53 @@
+﻿@inherits LayoutComponentBase
+@using Rihal.WebServer.Configurations
+@using Rihal.WebServer.ExceptionsHandlor
+@inject NavigationManager _navigationManager
+
+<MudThemeProvider @bind-IsDarkMode="@ThemeConfig.isDarkMode" />
+
+<PageTitle>Rihal.WebServer</PageTitle>
+
+<div class="page">
+    <div class="sidebar">
+        <NavMenu />
+    </div>
+
+    <main>
+        <div class="top-row px-4">
+            <a href="https://docs.microsoft.com/aspnet/" target="_blank">About</a>
+        </div>
+
+        <article class="content px-4" >
+           <CustomErrorBoundry @ref="errorBoundry">
+               <ChildContent>
+                   @Body
+               </ChildContent>
+                 <ErrorContent Context="Exception">
+                    <div class="alert alert-danger" style="text-align: center;">
+                        <h3>An error occurred while processing your request</h3>
+                        <br />
+                        <h3>Please call support </h3>
+                        <h4>244445869</h4>
+                        <button class="btn btn-info" @onclick="() => NavToHome()">Home Page</button>
+                    </div>
+                </ErrorContent>
+           </CustomErrorBoundry>
+        </article>
+    </main>
+</div>
+
+@code
+{
+    private CustomErrorBoundry errorBoundry;
+
+    protected override void OnInitialized()
+    {
+        errorBoundry = new CustomErrorBoundry();
+    }
+
+     public void NavToHome()
+    {
+         
+        _navigationManager.NavigateTo("/",forceLoad:true);
+    }
+}
